@@ -10,7 +10,7 @@ class Question1(object):
             pivot = (min_index + max_index) //2
             if self.array[pivot] == key:
                 return pivot
-            if self.array[min_index] < key and key < self.array[pivot]:
+            if self.array[min_index] <= key and key <= self.array[pivot]:
                 return self.bin_search(key, min_index, pivot-1)
             else:
                 return self.bin_search(key, pivot+1, max_index)
@@ -26,6 +26,9 @@ class TestCases(unittest.TestCase):
         key = 3
         q = Question1(array)
         ans = q.search(key)
+        print("=========== TestCase 1 =============")
+        print("array : {}".format(array))
+        print("key : {}".format(key))
         assert array[ans] == key
     def test2(self):
         array = []
@@ -33,10 +36,15 @@ class TestCases(unittest.TestCase):
             array.append(random.randint(1,100000))
         array = list(set(array))
         array.sort()
-        index = random.randint(0,len(array))
+        rotation_index = random.randint(0,len(array)-1)
+        array = array[rotation_index:] + array[0:rotation_index]
+        index = random.randint(0,len(array)-1)
         key = array[index]
         q = Question1(array)
         ans = q.search(key)
+        print("=========== TestCase 2 =============")
+        print("array : {}".format(array))
+        print("key : {}".format(key))
         assert array[ans] == key
 
 if __name__=="__main__":
